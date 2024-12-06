@@ -1,0 +1,16 @@
+# macOS system files
+.DS_Store
+
+# VS Code settings
+.vscode/
+
+# Python environment and cache
+__pycache__/
+.env
+.venv
+
+# Node.js modules (if applicable)
+node_modules/
+
+# Other irrelevant files
+*.log
