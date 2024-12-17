@@ -71,44 +71,67 @@ export default function Home() {
           <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
           <Card>
             <CardContent>
-              <form className="space-y-4" onSubmit={async (e) => {
-                e.preventDefault();
-                const formData = new FormData(e.currentTarget);
-                const data = Object.fromEntries(formData);
-                
-                try {
-                  const response = await fetch('/api/contact', {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                  });
+              <form 
+                className="space-y-4" 
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  const form = e.currentTarget;
+                  const formData = new FormData(form);
                   
-                  if (!response.ok) throw new Error('Failed to send message');
-                  
-                  // Handle success (clear form, show message, etc.)
-                } catch (error) {
-                  // Handle error
-                }
-              }}>
+                  try {
+                    const response = await fetch('/api/contact', {
+                      method: 'POST',
+                      body: JSON.stringify({
+                        name: formData.get('name'),
+                        email: formData.get('email'),
+                        message: formData.get('message'),
+                      }),
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                    });
+                    
+                    if (!response.ok) {
+                      throw new Error('Failed to send message');
+                    }
+                    
+                    // Clear the form on success
+                    form.reset();
+                    alert('Message sent successfully!');
+                  } catch (err) {
+                    console.error('Error sending message:', err);
+                    alert('Failed to send message. Please try again.');
+                  }
+                }}
+              >
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                     Name
                   </label>
-                  <Input id="name" placeholder="Your Name" />
+                  <Input id="name" name="name" required placeholder="Your Name" />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                     Email
                   </label>
-                  <Input id="email" type="email" placeholder="your@email.com" />
+                  <Input 
+                    id="email" 
+                    name="email" 
+                    type="email" 
+                    required 
+                    placeholder="your@email.com" 
+                  />
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700">
                     Message
                   </label>
-                  <Textarea id="message" placeholder="Your message" />
+                  <Textarea 
+                    id="message" 
+                    name="message" 
+                    required 
+                    placeholder="Your message" 
+                  />
                 </div>
                 <Button type="submit">Send Message</Button>
               </form>

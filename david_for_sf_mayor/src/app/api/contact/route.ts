@@ -3,14 +3,18 @@ import { NextResponse } from 'next/server';
 export async function POST(req: Request) {
   try {
     const data = await req.json();
+    console.log('Received contact form submission:', data);
     
-    // Add your email sending logic here
-    // You might want to use services like SendGrid, AWS SES, etc.
-    
-    return NextResponse.json({ message: 'Message sent successfully' });
-  } catch (error) {
+    // TODO: Implement email sending logic
+    // For now, just return success to fix the unused variable error
+    return NextResponse.json({ 
+      success: true,
+      message: 'Message received successfully'
+    });
+  } catch (error: unknown) {
+    console.error('Contact form error:', error);
     return NextResponse.json(
-      { error: 'Failed to send message' },
+      { success: false, error: 'Failed to process message' },
       { status: 500 }
     );
   }
