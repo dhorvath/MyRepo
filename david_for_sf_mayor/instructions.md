@@ -11,3 +11,7 @@
 
 # Instructions
 * Shadcn is no longer installed used shadcn-ui. Use -- npm install shadcn lucide-react
+
+
+
+Hello, hello, hello! I'm having more instructions... 
